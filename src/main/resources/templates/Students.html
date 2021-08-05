@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
+<script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body>
+<H2>List of Students </H2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" >AddStudent</button>
+<table class="table table-stripped">
+<thead>
+<tr>
+<td>Id</td>
+<td>Name</td>
+<td>Department</td>
+<td>Updated By</td>
+<td>Updated On</td>
+<td>Edit</td>
+<td>Delete</td>
+</tr>
+</thead>
+<tr th:each="student:${students}">
+<td th:text="${student.Id}">Id</td>
+<td th:text="${student.name}">Name</td>
+<td th:text="${student.departement}">Department</td>
+<td th:text="${student.updateBy}">Updated By</td>
+<td th:text="${student.updateOn}">Updated On</td>
+<td><a th:href="@{/students/getOne/(Id=${student.Id})}" id="editButton" class="btn btn-primary"  >edit</a></td>
+<td><a th:href="@{/students/delete/(Id=${student.Id})}" id="deleteButton" class="btn btn-danger"  >delete</a></td>
+
+</tr>
+</table>!
+<!-- --------- New Student  -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+ <form th:action="@{/students/addNew}" method="POST">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">New Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="id" class="col-form-label">Id:</label>
+            <input type="text" class="form-control" id="id" name="id">
+          </div>
+          
+          <div class="form-group">
+            <label for="syudent_name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+          
+          <div class="form-group">
+            <label for="departement" class="col-form-label">Department:</label>
+            <input type="text" class="form-control" id="departement" name="departement">
+          </div>
+          
+          <div class="form-group">
+            <label for="updateBy" class="col-form-label">Update_By:</label>
+            <input type="text" class="form-control" id="updateBy" name="updateBy">
+          </div>
+          
+          <div class="form-group">
+            <label for="updateOn" class="col-form-label">Update_On:</label>
+            <input type="text" class="form-control" id="updateOn" name="updateOn">
+          </div>
+          
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+     
+  </div>
+  </form>
+</div>
+
+<!-- --------- Edit Student  -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+ <form th:action="@{/students/update}" method="PUT">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="id" class="col-form-label">Id:</label>
+            <input type="text" class="form-control" id="idedit" name="id">
+          </div>
+          
+          <div class="form-group">
+            <label for="syudent_name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="nameedit" name="name">
+          </div>
+          
+          <div class="form-group">
+            <label for="departement" class="col-form-label">Department:</label>
+            <input type="text" class="form-control" id="departementedit" name="departement">
+          </div>
+          
+          <div class="form-group">
+            <label for="updateBy" class="col-form-label">Update_By:</label>
+            <input type="text" class="form-control" id="updateByedit" name="updateBy">
+          </div>
+          
+          <div class="form-group">
+            <label for="updateOn" class="col-form-label">Update_On:</label>
+            <input type="text" class="form-control" id="updateOnedit" name="updateOn">
+          </div>
+          
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+     
+  </div>
+  </form>
+</div>
+
+<!-- -------- Delete Student -->
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this record?</p>
+      </div>
+      <div class="modal-footer">
+        <a href=""  class="btn btn-primary" id="delRef">Yes, Delete</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
